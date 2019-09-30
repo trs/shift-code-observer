@@ -1,0 +1,104 @@
+{
+  "name": "typescript-node-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "test:once": "jest",
+    "test": "npm run test:once -- --watchAll",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trs/typescript-node-template"
+  },
+  "author": "Tyler Stewart",
+  "license": "MIT",
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "rules": {
+      "@typescript-eslint/indent": [
+        "error",
+        2
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "_"
+        }
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "release": {
+    "branch": "master"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(\\.|/)spec\\.ts",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.4",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "eslint": "^6.3.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
+    "semantic-release": "^15.13.24",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "pure-stream": "^2.1.0",
+    "scrape-twitter": "^0.11.1"
+  }
+}
