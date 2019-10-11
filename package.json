@@ -1,7 +1,7 @@
 {
-  "name": "typescript-node-template",
-  "version": "1.0.0",
-  "description": "",
+  "name": "shift-code-observer",
+  "version": "0.0.2",
+  "description": "Observe Borderlands SHiFT codes when they are released",
   "main": "dist/index",
   "files": [
     "dist/"
@@ -9,7 +9,8 @@
   "scripts": {
     "test:once": "jest",
     "test": "npm run test:once -- --watchAll",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "repository": {
@@ -42,7 +43,9 @@
         {
           "argsIgnorePattern": "_"
         }
-      ]
+      ],
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-explicit-any": 0
     }
   },
   "lint-staged": {
@@ -70,22 +73,16 @@
       }
     }
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "lint-staged"
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.1.0",
-    "@commitlint/config-conventional": "^8.1.0",
+    "@types/cheerio": "^0.22.13",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.4",
+    "@types/node-fetch": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "eslint": "^6.3.0",
@@ -98,7 +95,9 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
-    "pure-stream": "^2.1.0",
-    "scrape-twitter": "^0.11.1"
+    "cheerio": "^1.0.0-rc.3",
+    "node-fetch": "^2.6.0",
+    "rss-feed-emitter": "^2.0.1",
+    "rxjs": "^6.5.3"
   }
 }

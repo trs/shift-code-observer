@@ -2,13 +2,17 @@
     "compilerOptions": {
       "outDir": "dist",
       "module": "commonjs",
-      "target": "es2017",
+      "target": "es2016",
+      "lib": [
+        "es2019"
+      ],
       "sourceMap": true,
       "strict": true,
       "moduleResolution": "node",
       "declaration": true,
+      "esModuleInterop": true,
       "typeRoots": [
-        "node_modules",
+        "node_modules/@types/",
         "./@types"
       ]
     },
