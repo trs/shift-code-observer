@@ -1,12 +1,13 @@
 import fetch from 'node-fetch';
 import { URL } from 'url';
 import cheerio from 'cheerio';
-import { Observable, from } from "rxjs";
-import { mergeAll, mergeMap } from "rxjs/operators";
+import { Observable, from, concat, timer } from "rxjs";
+import { mergeAll, switchMap, distinct, concatMap } from "rxjs/operators";
 
-import { ShiftCode } from "../types";
+import { ShiftCode } from "./types";
 
 const MAIN_URL = 'https://shift.orcicorn.com/shift-code';
+const POLL_INTERVAL = 60 * 1000;
 
 async function getPageNumbers() {
   const response = await fetch(MAIN_URL);
@@ -15,7 +16,7 @@ async function getPageNumbers() {
 
   const lastPage = $('.pagination .page-item:last-child .page-link a').text();
 
-  return new Array(parseInt(lastPage)).fill(0).map((_, i) => ++i);
+  return new Array(parseInt(lastPage)).fill(0).map((_, i) => ++i).reverse();
 }
 
 async function fetchCode(href: string): Promise<ShiftCode> {
@@ -63,14 +64,33 @@ async function fetchPage(page: number) {
   return await Promise.all(codes);
 }
 
+function observePage(page: number) {
+  return from(fetchPage(page))
+    .pipe(mergeAll());
+}
+
 /**
- * One time look up of all pages
+ * Fetch all shift codes, completed after all are observed
  */
-export function observe(): Observable<ShiftCode> {
+export function getShiftCodes() {
   return from(getPageNumbers())
     .pipe(
       mergeAll(),
-      mergeMap((page) => from(fetchPage(page))),
-      mergeAll()
+      switchMap((page) => observePage(page)),
+      distinct(({code}) => code)
     );
+}
+
+/**
+ * Fetch all shift codes, poll for newly released codes
+ */
+export function pollShiftCodes() {
+  return concat(
+    getShiftCodes(),
+    timer(0, POLL_INTERVAL)
+      .pipe(
+        concatMap(() => observePage(1)),
+        distinct(({code}) => code)
+      )
+  );
 }

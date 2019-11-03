@@ -1,2 +1,2 @@
-export { getShiftCodes } from './codes';
+export { getShiftCodes, pollShiftCodes } from './codes';
 export { ShiftCode } from './types';
