@@ -1,6 +1,6 @@
 {
   "name": "shift-code-observer",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "description": "Observe Borderlands SHiFT codes when they are released",
   "main": "dist/index",
   "files": [
