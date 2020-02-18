@@ -1,51 +1,29 @@
-# Shift Code Observer
+# Shift Code Source
 
-> Observe Borderlands SHiFT codes when they are released
+> Get active Borderlands SHiFT codes
 
 ## Install
 
 ```
-npm install shift-code-observer
+npm install shift-code-source
 ```
 
 ## Usage
 
-### `observeShiftCodes(options? Options): Observable<ShiftCode>`
+### `getShiftCodes(): AsyncGenerator<ShiftCode>`
 
-Create an [observable](https://rxjs-dev.firebaseapp.com/guide/observable) of SHiFT codes from various providers.
+Create an `AsyncGenerator` of active SHiFT codes.
 
 ```ts
 
-import {observeShiftCodes} from 'shift-code-observer';
+import {getShiftCodes} from 'shift-code-source';
 
-observeShiftCodes()
-.subscribe(
-  (code) => console.log(code),
-  (error) => console.error(error),
-  () => console.log('Done');
-);
+for await (const shift of getShiftCodes()) {
+  console.log(shift.code);
+}
 
 ```
 
-#### `Options`
-
-- `historic: boolean` (Default: `true`)
-    - If true, will fetch codes previously released.
-
-- `current: boolean` (Default: `true`)
-    - If true, will fetch newly released codes.
-
-- `game: string` / `games: string[]` (Default: `undefined`)
-    - If set, will only fetch codes matching the provided game(s).
-
-- `platform: string` / `platforms: string[]` (Default: `undefined`)
-    - IF set, will only fetch codes matching the provided platforms(s).
-
-## SHiFT Codes
-
-Codes will be historic (previously released) and brand new as they are released.
-
-## Sources
+## Source Attribution
 
 - https://shift.orcicorn.com/shift/
-- https://shiftcodes.tk/

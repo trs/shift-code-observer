@@ -1,8 +1,8 @@
 export interface ShiftCode {
   code: string;
+  game: string;
+  platform: string;
+  reward: string;
   created?: Date;
   expired?: Date;
-  game?: string;
-  platform?: string;
-  reward?: string;
 }
