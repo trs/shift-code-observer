@@ -9,11 +9,12 @@
   "scripts": {
     "test:once": "jest",
     "test": "npm run test:once -- --watchAll",
+    "prebuild": "rm -rf dist/",
     "build": "tsc",
     "prepare": "npm run build"
   },
   "keywords": [],
-"repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/trs/shift-code-source.git"
   },
